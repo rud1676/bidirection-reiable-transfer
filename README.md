@@ -38,3 +38,23 @@ rdt 3.0 bidirection GBN 방식의 패킷전송을 통해 신뢰성을 보장하�
 A와 B에 보낼 패킷수는 20개로 설정, packet손실, 변형 확률을 둘다 0.2, 메세지가 들어오는 평균 간격을 10으로 해서 테스트(TRACE는 디버깅을 위한 값)
 
 ![img/1.PNG](img/2.PNG)
+
+## 구현 함수 설명
+
+```c
+struct pkt make_pkt(int AorB, struct msg message); //보낼 패킷을 만드는 함수이다.
+int make_CheckSum(struct pkt packet);//패킷의 checksum을 계산해주는 함수이다.
+void A_output(struct msg message);
+void B_output(struct msg message);
+//data를 layer5에서 받았을 때 부르는 함수이다.
+void A_input(struct pkt packet);
+void B_input(struct pkt packet);
+//layer3에서 받은 데이터를 패킷으로 만드는 함수.
+void A_timerinterrupt();
+void B_timerinterrupt();
+//timer가 초과됬을때 패킷 재전송을 위한 함수
+void A_init();
+void B_init();
+//테스트전 초기화 함수
+
+```
